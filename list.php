@@ -128,7 +128,7 @@ $s_html .= '</script>';
 $s_html .= '<form id="formulaire_deplacement" method="post" action="index.php?action=gestion&subaction=action_mod">';
 $s_html .= 		'<input type="hidden" name="module_range" id="module_range" value="" />';
 $s_html .= 		'<input type="hidden" name="ordre" id="ordre" value="maj" />';
-$s_html .= 		'<input type="button" onclick="javascript:f_submit();" name="Mettre à jour" value="Mettre à jour" />';
+$s_html .= 		'<input type="button" onclick="javascript:f_submit();" name="Mettre Ã  jour" value="Mettre Ã  jour" />';
 $s_html .= '</form>';
 
 echo $s_html;

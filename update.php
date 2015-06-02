@@ -1,10 +1,10 @@
 <?php
 
 /**
-* update.php Fichier de mise à jour du MOD Gestion MOD
+* update.php Fichier de mise Ã  jour du MOD Gestion MOD
 * @package Gestion MOD
 * @author Kal Nightmare
-* @update xaviernuma - 2012
+* @update xaviernuma - 2015
 * @link http://www.ogsteam.fr/
 */
 

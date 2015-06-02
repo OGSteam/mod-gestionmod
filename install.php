@@ -4,7 +4,7 @@
 * install.php Fichier d'installation du MOD Gestion MOD
 * @package Gestion MOD
 * @author Kal Nightmare
-* @update xaviernuma - 2012
+* @update xaviernuma - 2015
 * @link http://www.ogsteam.fr/
 */
 
@@ -20,11 +20,11 @@ $is_ok = install_mod($mod_folder);
 
 if ($is_ok == true)
 {
-	// Si besoin de créer des tables.
+	// Si besoin de crÃ©er des tables.
 }
 else
 {
-	echo  '<script type="text/javascript">alert(\'Désolé, un problème à eu lieu pendant l\\\'installation, corrigez les problèmes survenus et réessayez.\');</script>';
+	echo  '<script type="text/javascript">alert(\'DÃ©solÃ©, un problÃ¨me Ã  eu lieu pendant l\\\'installation, corrigez les problÃ¨mes survenus et rÃ©essayez.\');</script>';
 }
 	
 ?>

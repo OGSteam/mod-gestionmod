@@ -4,7 +4,7 @@
 * rename.php Renommeur de MOD
 * @package Gestion MOD
 * @author Kal Nightmare
-* @update xaviernuma - 2012
+* @update xaviernuma - 2015
 * @link http://www.ogsteam.fr/
 */
 
@@ -28,7 +28,7 @@ $s_html .= '<table>';
 $s_html .= 	'<tr><td class="c" colspan="3">Liste des MODS</td></tr>';
 $s_html .=	'<tr>';
 $s_html .= 		'<th>Nom du MOD (version)</th>';
-$s_html .= 		'<th>Nom affiché sur le menu</th>';
+$s_html .= 		'<th>Nom affichÃ© sur le menu</th>';
 $s_html .= 		'<th>Renommer</th>';
 $s_html .= 	'</tr>';
 

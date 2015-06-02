@@ -1,10 +1,10 @@
 <?php
 
 /**
-* uninstall.php Fichier désinstallation du MOD Gestion MOD
+* uninstall.php Fichier dÃ©sinstallation du MOD Gestion MOD
 * @package Gestion MOD
 * @author Kal Nightmare
-* @update xaviernuma - 2012
+* @update xaviernuma - 2015
 * @link http://www.ogsteam.fr/
 */
 

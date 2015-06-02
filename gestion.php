@@ -1,13 +1,14 @@
 <?php
 
 /**
-* gestion.php Fichier de gestion des différentes parties
+* gestion.php Fichier de gestion des diffÃ©rentes parties
 * @package Gestion MOD
 * @author Kal Nightmare
 * @update xaviernuma - 2012
 * @link http://www.ogsteam.fr/
 */
-
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 if (!defined('IN_SPYOGAME')) 
 {
 	die("Hacking attempt");
@@ -25,7 +26,7 @@ define("GESTION_MOD", true);
 global $user_data;
 $s_html = '';
 
-// Récupération de la version
+// RÃ©cupÃ©ration de la version
 $s_sql = "SELECT `version` FROM `".TABLE_MOD."` WHERE `action` = 'gestion';";
 $ta_resultat = $db->sql_fetch_assoc($db->sql_query($s_sql));
 
@@ -156,8 +157,8 @@ if($pub_subaction <> 'modUpdate')
 {
 	$s_html = '';
 	$s_html .= '<div style="font-size:10px;width:400px;text-align:center;background-image:url(\'skin/OGSpy_skin/tableaux/th.png\');background-repeat:repeat;">Gestion MOD ('.$version.')';
-	$s_html .= '<br>Développé par <a href="mailto:kalnightmare@free.fr">Kal Nightmare</a> 2006';
-	$s_html .= '<br>Mise à jour par <a href="mailto:contact@epe-production.org?subject=gestionmod">xaviernuma</a> 2012</div>';
+	$s_html .= '<br>DÃ©veloppÃ© par <a href="mailto:kalnightmare@free.fr">Kal Nightmare</a> 2006';
+	$s_html .= '<br>Mise Ã  jour par <a href="mailto:contact@epe-production.org?subject=gestionmod">xaviernuma</a> 2015</div>';
 
 	echo $s_html;
 }

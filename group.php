@@ -4,7 +4,7 @@
 * group.php Fichier de gestion des groupes
 * @package Gestion MOD
 * @author Kal Nightmare
-* @update xaviernuma - 2012
+* @update xaviernuma - 2015
 * @link http://www.ogsteam.fr/
 */
 
@@ -15,7 +15,7 @@ if (!defined('IN_SPYOGAME'))
 
 $s_html = '';
 
-// Code HTML pour la création de groupe
+// Code HTML pour la crÃ©ation de groupe
 $s_html .= '<form method="post" action="index.php?action=gestion&subaction=new_group">';
 
 $s_html .= '<br>';
@@ -40,7 +40,7 @@ $ta_liste_groupes = f_lister_les_groupes();
 $n_groupes = count($ta_liste_groupes);
 
 // Code HTML pour la modification de groupe
-if($n_groupes > 0) // Si il n'y a pas de groupe de créé, on n'affiche pas le tableau des groupes existant
+if($n_groupes > 0) // Si il n'y a pas de groupe de crÃ©Ã©, on n'affiche pas le tableau des groupes existant
 {
 	$s_html .= '<script type="text/javascript">';
 	$s_html .= 	'function f_submit(num_group, nom_group, admin, ordre)';
@@ -62,7 +62,7 @@ if($n_groupes > 0) // Si il n'y a pas de groupe de créé, on n'affiche pas le tab
 
 	$s_html .= '<table>';
 	
-	// Si il n'y a qu'un seul groupe, on fait attention à l'orthographe...
+	// Si il n'y a qu'un seul groupe, on fait attention Ã  l'orthographe...
 	if($n_groupes == 1)
 	{
 		$s_html .= 	'<tr><td class="c" colspan="4" >Groupe existant</td></tr>';

@@ -4,7 +4,7 @@
 * function.php Fichier avec les fonctions
 * @package Gestion MOD
 * @author Kal Nightmare
-* @update xaviernuma - 2012
+* @update xaviernuma - 2015
 * @link http://www.ogsteam.fr/
 */
 
@@ -18,31 +18,31 @@ if (!defined('GESTION_MOD'))
 	die("Hacking attempt");
 }
 
-// Retourne le dernier numÈro de groupe qui ‡ ÈtÈ crÈÈ.
+// Retourne le dernier num√©ro de groupe qui √† √©t√© cr√©√©.
 function f_dernier_numero_de_groupe() 
 {
-	// DÈclaration des variables
+	// D√©claration des variables
 	global $db;
 	
-	// On sÈlectionne les numÈros de groupe dans la table root
+	// On s√©lectionne les num√©ros de groupe dans la table root
 	$s_sql = "SELECT `root` FROM `".TABLE_MOD."` WHERE `link` = 'group' ORDER BY `root` desc;";
 	
-	// On rÈcupËre le dernier numÈro crÈÈ
+	// On r√©cup√®re le dernier num√©ro cr√©√©
 	$r_sql = $db->sql_query($s_sql);
 	$ta_dernier_numero_groupe = $db->sql_fetch_assoc($r_sql);
 	
 	return $ta_dernier_numero_groupe['root'];
 }
 
-// Fonction qui liste les groupes crÈÈ par gestionmod
+// Fonction qui liste les groupes cr√©√© par gestionmod
 function f_lister_les_groupes()
 {
-	// DÈclaration des variables
+	// D√©claration des variables
 	global $db;
 	$i = 0;
 	$ta_groupes = array();
 	
-	// On rÈcupËre le numÈro du groupe et le lien de chaque groupe crÈÈ
+	// On r√©cup√®re le num√©ro du groupe et le lien de chaque groupe cr√©√©
 	$s_sql = "SELECT `menu`, `root`, `admin_only` FROM `".TABLE_MOD."` WHERE `link` = 'group';";
 	$r_sql = $db->sql_query($s_sql);
 	
@@ -58,7 +58,7 @@ function f_lister_les_groupes()
 // Transforme un nom en nom de menu (xaviernuma - 2012)
 function f_traitement_nom_groupe($s_nom, $b_nouveau_groupe, $n_admin = 0)
 {
-	// DÈclaration des variables
+	// D√©claration des variables
 	$s_menu = '';
 	
 	if($s_nom <> '') 
@@ -74,7 +74,7 @@ function f_traitement_nom_groupe($s_nom, $b_nouveau_groupe, $n_admin = 0)
 		$s_menu .= '">';	
 		$s_menu .= '<center><b>'.$s_nom.'</b></center></div><a>';	
 	
-		// On vÈrifie si le nom n'existe pas dÈj‡
+		// On v√©rifie si le nom n'existe pas d√©j√†
 		$ta_liste_groupes = f_lister_les_groupes();
 		for($i = 0 ; $i < count($ta_liste_groupes) ; $i++)
 		{
@@ -82,19 +82,19 @@ function f_traitement_nom_groupe($s_nom, $b_nouveau_groupe, $n_admin = 0)
 			{
 				if($ta_liste_groupes[$i]['Nom'] == $s_menu)
 				{
-					$s_menu = ''; // On met ‡ null menu
+					$s_menu = ''; // On met √† null menu
 				}
 			}
 			else
 			{
 				if(($ta_liste_groupes[$i]['Nom'] == $s_menu) and ($ta_liste_groupes[$i]['admin'] == $n_admin))
 				{
-					$s_menu = ''; // On met ‡ null menu
+					$s_menu = ''; // On met √† null menu
 				}
 			}
 		}
 		
-		// Le champ dans la base est de 255 caractËre, on regarde si on ne dÈpasse pas
+		// Le champ dans la base est de 255 caract√®re, on regarde si on ne d√©passe pas
 		if(strlen($s_menu) > 255)
 		{
 			$s_menu = '';
@@ -104,17 +104,17 @@ function f_traitement_nom_groupe($s_nom, $b_nouveau_groupe, $n_admin = 0)
 	return $s_menu;
 }
 
-// CrÈation d'un nouveau groupe
+// Cr√©ation d'un nouveau groupe
 function f_nouveau_groupe() 
 {
-	// DÈclaration des variables
+	// D√©claration des variables
 	global $db, $dir;
 	$s_champs = '';
-	$s_menu = ''; // Attention, limitÈ ‡ 255 caractËres...
+	$s_menu = ''; // Attention, limit√© √† 255 caract√®res...
 	$new_group = '';
 	$n_groupe_admin = 0; // 0 Groupe normal, 1 Groupe admin
 	
-	// On test si des donnÈes ont ÈtÈ envoyÈ
+	// On test si des donn√©es ont √©t√© envoy√©
 	if(isset($_POST['new_group'])) 
 	{
 		if(isset($_POST['admin'])) 
@@ -124,11 +124,11 @@ function f_nouveau_groupe()
 		$s_menu = f_traitement_nom_groupe($_POST['new_group'], true);
 		if(!empty($s_menu))
 		{
-			// On gÈnËre le nouvel identifiant du groupe
+			// On g√©n√®re le nouvel identifiant du groupe
 			$num_new_group = f_dernier_numero_de_groupe();
 			$num_new_group++;
 			
-			// PrÈparation de la requÍte
+			// Pr√©paration de la requ√™te
 			$s_champs .= "INSERT INTO ";
 			$s_champs .= "`".TABLE_MOD."` SET ";
 			$s_champs .= "`id` = '', ";
@@ -142,14 +142,14 @@ function f_nouveau_groupe()
 			$s_champs .= "`admin_only` = '%s' ";
 
 			$s_sql = sprintf($s_champs,
-					mysql_real_escape_string("Group.".$num_new_group),
-					mysql_real_escape_string($s_menu),
-					mysql_real_escape_string($num_new_group),
-					mysql_real_escape_string($num_new_group),
-					mysql_real_escape_string('group'),
-					mysql_real_escape_string(0),
-					mysql_real_escape_string(1),
-					mysql_real_escape_string($n_groupe_admin)
+					mysqli_real_escape_string($db->db_connect_id, "Group.".$num_new_group),
+					mysqli_real_escape_string($db->db_connect_id, $s_menu),
+					mysqli_real_escape_string($db->db_connect_id, $num_new_group),
+					mysqli_real_escape_string($db->db_connect_id, $num_new_group),
+					mysqli_real_escape_string($db->db_connect_id, 'group'),
+					mysqli_real_escape_string($db->db_connect_id, 0),
+					mysqli_real_escape_string($db->db_connect_id, 1),
+					mysqli_real_escape_string($db->db_connect_id, $n_groupe_admin)
 					);
 			$db->sql_query($s_sql);
 			// On met les groupes dans l'ordre
@@ -159,17 +159,17 @@ function f_nouveau_groupe()
 	redirection("index.php?action=gestion&subaction=group");
 }
 
-// Cette fonction ‡ pour but de renommer ou supprimer un groupe
+// Cette fonction √† pour but de renommer ou supprimer un groupe
 function f_gerer_un_groupe() 
 {
-	// DÈclaration des variables
+	// D√©claration des variables
 	global $db;
 	$s_champs = '';
 	
-	// On vÈrifie si toutes les donnÈes sont bien arrivÈs.
+	// On v√©rifie si toutes les donn√©es sont bien arriv√©s.
 	if (isset($_POST['ordre']) && isset($_POST['num_group']) && isset($_POST['nom_group']) && isset($_POST['admin'])) 
 	{
-		// On vÈrifie que le numÈro de group n'est pas vide et que le champs admin soit bien un nombre (0 ou 1)
+		// On v√©rifie que le num√©ro de group n'est pas vide et que le champs admin soit bien un nombre (0 ou 1)
 		if(($_POST['num_group'] <> '') and (is_numeric($_POST['admin']))) 
 		{
 			switch ($_POST['ordre']) 
@@ -178,7 +178,7 @@ function f_gerer_un_groupe()
 					$s_menu = f_traitement_nom_groupe($_POST['nom_group'], false, $_POST['admin']);
 					if(!empty($s_menu))
 					{	
-						// PrÈparation de la requÍte
+						// Pr√©paration de la requ√™te
 						$s_champs .= "UPDATE ";
 						$s_champs .= "`".TABLE_MOD."` SET ";
 						$s_champs .= "`menu` = '%s', ";
@@ -187,9 +187,9 @@ function f_gerer_un_groupe()
 						$s_champs .= "`title` = '%s';";
 	
 						$s_sql = sprintf($s_champs,
-								mysql_real_escape_string($s_menu),
-								mysql_real_escape_string($_POST['admin']), // 0 Groupe normal, 1 Groupe admin
-								mysql_real_escape_string('Group.'.$_POST['num_group'])
+								mysqli_real_escape_string($db->db_connect_id, $s_menu),
+								mysqli_real_escape_string($db->db_connect_id, $_POST['admin']), // 0 Groupe normal, 1 Groupe admin
+								mysqli_real_escape_string($db->db_connect_id, 'Group.'.$_POST['num_group'])
 								);
 						$db->sql_query($s_sql);
 					}
@@ -208,10 +208,10 @@ function f_gerer_un_groupe()
 	redirection("index.php?action=gestion&subaction=group");
 }	
 
-// RÈcupËre le contenu de la table mod		
+// R√©cup√®re le contenu de la table mod		
 function f_lister_la_table_mod() 
 {
-	// DÈclaration des variables
+	// D√©claration des variables
 	global $db;
 	$i = 1;
 	$type = 0; // Si 0 : mod, si 1 : groupe
@@ -228,7 +228,7 @@ function f_lister_la_table_mod()
 		
 		$ta_liste_des_mods[$i] = array('menu' => $row['menu'], 'position' => $i, 'type' => $type, 'id' => $row['id'] , 'title' => $row['title'], 'version' => $row['version'], 'active' => $row['active'], 'admin_only' => $row['admin_only']);
 		
-		// on met ‡ jour les positions dans l'ordre croissant, cela permet d'avoir une suite de position sans 'trou' dans le cas ou un mod/groupe est supprimÈ
+		// on met √† jour les positions dans l'ordre croissant, cela permet d'avoir une suite de position sans 'trou' dans le cas ou un mod/groupe est supprim√©
 		$s_sql = "UPDATE ".TABLE_MOD." SET position='".$i."' WHERE id = '".$row["id"]."' ";
 		$db->sql_query($s_sql);
 		
@@ -238,14 +238,14 @@ function f_lister_la_table_mod()
 	return $ta_liste_des_mods;
 }
 
-// RÈcupËre le nom du groupe ‡ partir du nom de groupe stockÈ dans la BDD (avec le code HTML/CSS personalisÈ)
+// R√©cup√®re le nom du groupe √† partir du nom de groupe stock√© dans la BDD (avec le code HTML/CSS personalis√©)
 function f_nom_du_groupe($s_menu) 
 {
-	// DÈclaration des variables
+	// D√©claration des variables
 	$t_resultats = array();
 	$s_nom_du_groupe = '';
 	
-	// Ancien pattern pour ceux qui ont crÈÈ nom de groupe avant la mise ‡ jour du mod
+	// Ancien pattern pour ceux qui ont cr√©√© nom de groupe avant la mise √† jour du mod
 	if(preg_match("#^.*?<a href=\"\"><u>(.*?)<\/u><\/a>.*$#", $s_menu, $t_resultats)) 
 	{
 		$s_nom_du_groupe = $t_resultats[1];
@@ -257,18 +257,18 @@ function f_nom_du_groupe($s_menu)
 	return $s_nom_du_groupe;
 }	
 
-// Met ‡ jour les positions des mods/groupes et renomme les modules
+// Met √† jour les positions des mods/groupes et renomme les modules
 function f_gerer_mod() 
 {
-	// DÈclaration des variables
+	// D√©claration des variables
 	global $db;
 	
-	// On vÈrifie si toutes les donnÈes sont bien arrivÈs.
+	// On v√©rifie si toutes les donn√©es sont bien arriv√©s.
 	if(isset($_POST['module_range']) && isset($_POST['ordre']) || (isset($_POST['menu'])))
 	{
 		switch ($_POST['ordre']) 
 		{
-			case "maj": // On met ‡ jour les id des modules dans le nouvel ordre de rangement
+			case "maj": // On met √† jour les id des modules dans le nouvel ordre de rangement
 				$t_id_modules = explode( ',' , $_POST['module_range']);
 				
 				for( $i = 0 ; $i < count($t_id_modules) ; $i++)
@@ -279,8 +279,8 @@ function f_gerer_mod()
 					$s_champs .= "WHERE id = '%s';";
 
 					$s_sql = sprintf($s_champs,
-							mysql_real_escape_string($i),
-							mysql_real_escape_string($t_id_modules[$i])
+							mysqli_real_escape_string($db->db_connect_id, $i),
+							mysqli_real_escape_string($db->db_connect_id, $t_id_modules[$i])
 							);
 					$r_sql = $db->sql_query($s_sql);
 				}
@@ -309,8 +309,8 @@ function f_gerer_mod()
 					$s_champs .= "WHERE id = '%s';";
 
 					$s_sql = sprintf($s_champs,
-							mysql_real_escape_string($_POST['menu']),
-							mysql_real_escape_string($_POST['id'])
+							mysqli_real_escape_string($db->db_connect_id, $_POST['menu']),
+							mysqli_real_escape_string($db->db_connect_id, $_POST['id'])
 							);
 					$r_sql = $db->sql_query($s_sql);
 				}
@@ -333,11 +333,11 @@ function f_aide_html()
 {
 	$s_html = '';
 	$s_html .= '<div id="aide" style="display:block;font-size: 12px;width: 795px;text-align:left;background-image:url(\'skin/OGSpy_skin/tableaux/th.png\');background-repeat:repeat;">';
-	$s_html .= 	'Voici quelques exemples de code HTML que vous pouvez utiliser pour changer le style d\'Ècriture.';
+	$s_html .= 	'Voici quelques exemples de code HTML que vous pouvez utiliser pour changer le style d\'√©criture.';
 	$s_html .= 	'<ul>';
 	$s_html .= 		'<li>'.htmlentities ('<font color="red">Gestion des attaques</font>').' : <font color="red">Gestion des attaques</font><br>';
 	$s_html .= 		'<li>'.htmlentities ('<font size="3">Gestion des attaques</font>').' : <font size="3">Gestion des attaques</font><br>';
-	$s_html .= 		'<li>'.htmlentities ('<br>').' : Aller ‡ la ligne.<br>';
+	$s_html .= 		'<li>'.htmlentities ('<br>').' : Aller √† la ligne.<br>';
 	$s_html .= 		'<li>'.htmlentities ('<u>Gestion des attaques</u>').' : <u>Gestion des attaques</u><br>';
 	$s_html .= 		'<li>'.htmlentities ('<i>Gestion des attaques</i>').' : <i>Gestion des attaques</i><br>';
 	$s_html .= 		'<li>'.htmlentities ('<b>Gestion des attaques</b>').' : <b>Gestion des attaques</b><br>';
