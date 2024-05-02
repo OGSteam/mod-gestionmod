@@ -25,13 +25,18 @@ function f_dernier_numero_de_groupe()
 	global $db;
 	
 	// On sélectionne les numéros de groupe dans la table root
-	$s_sql = "SELECT `root` FROM `".TABLE_MOD."` WHERE `link` = 'group' ORDER BY `root` desc;";
+	$s_sql = "SELECT `root` FROM ".TABLE_MOD." WHERE `link` = 'group' ORDER BY `root` desc;";
 	
 	// On récupère le dernier numéro créé
 	$r_sql = $db->sql_query($s_sql);
 	$ta_dernier_numero_groupe = $db->sql_fetch_assoc($r_sql);
 	
-	return $ta_dernier_numero_groupe['root'];
+	if (isset($ta_dernier_numero_groupe['root']))
+	{
+		return $ta_dernier_numero_groupe['root'];
+	}
+
+	return 0;
 }
 
 // Fonction qui liste les groupes créé par gestionmod
@@ -63,10 +68,10 @@ function f_traitement_nom_groupe($s_nom, $b_nouveau_groupe, $n_admin = 0)
 	
 	if($s_nom <> '') 
 	{
-		if(get_magic_quotes_gpc() == 1)
-		{
-			$s_nom = stripslashes($s_nom);
-		}
+
+	    // Nettoyage de l'entrée (get_magic_quotes_gpc deprecié )
+	    $s_nom = nettoyerEntree( stripslashes($s_nom));
+
 		$s_menu .= '</a><div style="';
 		$s_menu .= 'background:#000;';
 		$s_menu .= 'bottom:9px;';
@@ -131,7 +136,7 @@ function f_nouveau_groupe()
 			// Préparation de la requête
 			$s_champs .= "INSERT INTO ";
 			$s_champs .= "`".TABLE_MOD."` SET ";
-			$s_champs .= "`id` = '', ";
+			///$s_champs .= "`id` = '', ";
 			$s_champs .= "`title` = '%s', ";
 			$s_champs .= "`menu` = '%s', ";
 			$s_champs .= "`action` = '%s', ";
@@ -151,6 +156,8 @@ function f_nouveau_groupe()
 					mysqli_real_escape_string($db->db_connect_id, 1),
 					mysqli_real_escape_string($db->db_connect_id, $n_groupe_admin)
 					);
+
+			
 			$db->sql_query($s_sql);
 			// On met les groupes dans l'ordre
 			f_lister_la_table_mod();
@@ -289,20 +296,21 @@ function f_gerer_mod()
 				$b_existant = false;
 				
 				$ta_liste_des_mods = f_lister_la_table_mod();
-				for($i = 0 ; $i < count($ta_liste_des_mods) ; $i++)
+
+				foreach ($ta_liste_des_mods as $mod)
 				{
-					if($ta_liste_des_mods[$i]['menu'] == $_POST['menu'])
+					if ($mod['menu'] == $_POST['menu'])
 					{
 						$b_existant = true;
 					}
 				}
+
 				
 				if(!$b_existant)
 				{
-					if(get_magic_quotes_gpc () == 1)
-					{
-						$_POST['menu'] = stripslashes($_POST['menu']);
-					}
+					// Nettoyage (get_magic_quotes_gpc deprecié )
+					$_POST['menu'] = nettoyerEntree( stripslashes($_POST['menu']));
+
 					$s_champs = "UPDATE ";
 					$s_champs .= "`".TABLE_MOD."` SET ";
 					$s_champs .= "`menu` = '%s' ";
@@ -313,19 +321,14 @@ function f_gerer_mod()
 							mysqli_real_escape_string($db->db_connect_id, $_POST['id'])
 							);
 					$r_sql = $db->sql_query($s_sql);
+
 				}
 				break;
 		}
 	}
 	
-	if(isset($_POST['page']))
-	{	
-		redirection("index.php?action=gestion&subaction=".$_POST['page']);
-	}
-	else 
-	{
+
 		redirection("index.php?action=gestion");
-	}
 }
 
 // Affichage de l'aide pour les balises HTML (xaviernuma - 2012)
@@ -345,6 +348,22 @@ function f_aide_html()
 	$s_html .= '</div>';
 	
 	return $s_html;
+}
+
+function nettoyerEntree($entree,$nb = 255)
+{
+    // Suppression des caractères non imprimables
+    $entree = preg_replace('/[^\p{L}\p{N}\s]/u', '', $entree);
+
+    // Suppression des espaces multiples
+    $entree = preg_replace('/\s+/', ' ', $entree);
+
+    // Validation de la longueur (ici, nous limitons à 255 caractères)
+    if (strlen($entree) > 255) {
+        $entree = substr($entree, 0, $nb);
+    }
+
+    return $entree;
 }
 
 ?>
