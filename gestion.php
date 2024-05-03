@@ -88,7 +88,7 @@ if ($pub_subaction <> 'list')
 	</div>
 	<?php if ($isautoupdate) : ?>
 		<div class="nav-page-menu-item   ">
-			<a class="nav-page-menu-link" href="index.php?action=gestion&amp;subaction=modUpdate">
+			<a class="nav-page-menu-link" href="index.php?action=AutoUpdate">
 				AutoUpdate
 			</a>
 		</div>
@@ -120,6 +120,7 @@ switch ($pub_subaction) {
 		break;
 
 	case 'modUpdate':
+		//plus utilisé
 		require($lien);
 		break;
 

@@ -335,8 +335,17 @@ function f_gerer_mod()
 function f_aide_html()
 {
 	$s_html = '';
-	$s_html .= '<div id="aide" style="display:block;font-size: 12px;width: 795px;text-align:left;background-image:url(\'skin/OGSpy_skin/tableaux/th.png\');background-repeat:repeat;">';
-	$s_html .= 	'Voici quelques exemples de code HTML que vous pouvez utiliser pour changer le style d\'écriture.';
+	$s_html .= '<div class="og-msg og-msg-danger">';
+	$s_html .= 	 '<h3 class="og-title">Attention</h3>';
+	$s_html .= 	 '<p class="og-content">Il n est plus possible d inserer du code HTML pour le moment</p>';
+
+	$s_html .= 	'</div>';
+
+
+	$s_html .= '';
+	$s_html .= '<div class="og-msg ">';
+	$s_html .= 	 '<h3 class="og-title">Exemples</h3>';
+	$s_html .= 	 '<p class="og-content">Voici quelques exemples de code HTML que vous pouvez utiliser pour changer le style d\'écriture.</p>';
 	$s_html .= 	'<ul>';
 	$s_html .= 		'<li>'.htmlentities ('<font color="red">Gestion des attaques</font>').' : <font color="red">Gestion des attaques</font><br>';
 	$s_html .= 		'<li>'.htmlentities ('<font size="3">Gestion des attaques</font>').' : <font size="3">Gestion des attaques</font><br>';
@@ -345,13 +354,16 @@ function f_aide_html()
 	$s_html .= 		'<li>'.htmlentities ('<i>Gestion des attaques</i>').' : <i>Gestion des attaques</i><br>';
 	$s_html .= 		'<li>'.htmlentities ('<b>Gestion des attaques</b>').' : <b>Gestion des attaques</b><br>';
 	$s_html .= 	'</ul>';
-	$s_html .= '</div>';
+	$s_html .= 	'</div>';
 	
 	return $s_html;
 }
 
+
+
 function nettoyerEntree($entree,$nb = 255)
 {
+
     // Suppression des caractères non imprimables
     $entree = preg_replace('/[^\p{L}\p{N}\s]/u', '', $entree);
 

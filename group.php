@@ -19,19 +19,23 @@ $s_html = '';
 $s_html .= '<form method="post" action="index.php?action=gestion&subaction=new_group">';
 
 $s_html .= '<br>';
-$s_html .= '<table>';
+$s_html .= '<table class="og-table og-little-table">';
+$s_html .= 	'<thead>';
 $s_html .= 	'<tr>';
-$s_html .= 		'<td class="c" colspan="2">Nouveau groupe</td>';
+$s_html .= 		'<th colspan="2">Nouveau groupe</th>';
 $s_html .= 	'</tr>';
 $s_html .= 	'<tr>';
 $s_html .= 		'<th>Nom</th>';
 $s_html .= 		'<th>Admin</th>';
 $s_html .= 	'</tr>';
+$s_html .= 	'</thead>';
+$s_html .= 	'<tbody>';
 $s_html .= 	'<tr>';
-$s_html .= 		'<th><input type="text" name="new_group" size="100" maxlength="250"></th>';
-$s_html .= 		'<th><input type="checkbox" name="admin" value="" /></th>';
+$s_html .= 		'<td><input type="text" name="new_group" size="100" maxlength="250"></td>';
+$s_html .= 		'<td><input type="checkbox" name="admin" value="" /></td>';
 $s_html .= '</tr>';
-$s_html .= '<tr><th colspan="3"><input type="submit" value="Nouveau Groupe" /></th></tr>';
+$s_html .= '<tr><td colspan="3"><input class="og-button" type="submit" value="Nouveau Groupe" /></td></tr>';
+$s_html .= 	'</tbody>';
 $s_html .= '</table>';
 
 $s_html .= '</form>';
@@ -60,16 +64,16 @@ if($n_groupes > 0) // Si il n'y a pas de groupe de créé, on n'affiche pas le t
 	$s_html .= 	'}';
 	$s_html .= '</script>';
 
-	$s_html .= '<table>';
-	
+	$s_html .= '<table class="og-table og-little-table">';
+	$s_html .= 	'<thead>';
 	// Si il n'y a qu'un seul groupe, on fait attention à l'orthographe...
 	if($n_groupes == 1)
 	{
-		$s_html .= 	'<tr><td class="c" colspan="4" >Groupe existant</td></tr>';
+		$s_html .= 	'<tr><th colspan="4" >Groupe existant</th></tr>';
 	}
 	else
 	{
-		$s_html .= 	'<tr><td class="c" colspan="4" >Groupes existants</td></tr>';
+		$s_html .= 	'<tr><th colspan="4" >Groupes existants</th></tr>';
 	}
 	
 	$s_html .= 	'<tr>';
@@ -77,26 +81,27 @@ if($n_groupes > 0) // Si il n'y a pas de groupe de créé, on n'affiche pas le t
 	$s_html .= 		'<th>Admin</th>';
 	$s_html .= 		'<th colspan="2"></th>';
 	$s_html .= 	'</tr>';
-	
+	$s_html .= 	'</thead>';
+	$s_html .= 	'<tbody>';
 	for ($i = 0 ; $i < count($ta_liste_groupes) ; $i++) 
 	{
 		$s_html .= 	'<tr>';
-		$s_html .= 		'<th><input type="text" name="nom_group'.$i.'" id="nom_group'.$i.'" style="width:500px;" maxlength="250" value="'.htmlentities(f_nom_du_groupe($ta_liste_groupes[$i]['Nom'])).'" /></th>';
+		$s_html .= 		'<td><input type="text" name="nom_group'.$i.'" id="nom_group'.$i.'" style="width:500px;" maxlength="250" value="'.htmlentities(f_nom_du_groupe($ta_liste_groupes[$i]['Nom'])).'" /></td>';
 		
 		if ($ta_liste_groupes[$i]['admin'] == '1' ) 
 		{
-			$s_html .= '<th><input type="checkbox" name="admin'.$i.'" value="" checked="checked" /></th>';
+			$s_html .= '<td><input type="checkbox" name="admin'.$i.'" value="" checked="checked" /></td>';
 		}
 		else 
 		{	
-			$s_html .= '<th><input type="checkbox" name="admin'.$i.'" value="" /></th>';
+			$s_html .= '<td><input type="checkbox" name="admin'.$i.'" value="" /></td>';
 		}
 		
-		$s_html .= 		'<th><input type="button" onclick="javascript:f_submit(\''.$ta_liste_groupes[$i]['Num'].'\', \'nom_group'.$i.'\', \'admin'.$i.'\',\'Renommer Groupe\');" name="ordre" value="Renommer Groupe" /></th>';
-		$s_html .= 		'<th><input type="button" onclick="javascript:f_submit(\''.$ta_liste_groupes[$i]['Num'].'\', \'nom_group'.$i.'\', \'admin'.$i.'\',\'Supprimer Groupe\');" name="ordre" value="Supprimer Groupe" /></th>';
+		$s_html .= 		'<td><input class="og-button" type="button" onclick="javascript:f_submit(\''.$ta_liste_groupes[$i]['Num'].'\', \'nom_group'.$i.'\', \'admin'.$i.'\',\'Renommer Groupe\');" name="ordre" value="Renommer Groupe" /></td>';
+		$s_html .= 		'<td><input class="og-button  og-button-danger" type="button" onclick="javascript:f_submit(\''.$ta_liste_groupes[$i]['Num'].'\', \'nom_group'.$i.'\', \'admin'.$i.'\',\'Supprimer Groupe\');" name="ordre" value="Supprimer Groupe" /></td>';
 		$s_html .= 	'</tr>';
 	}
-
+	$s_html .= 	'</tbody>';
 	$s_html .= '</table>';
 
 	$s_html .= '<form id="form_modification_mod" method="post" action="index.php?action=gestion&subaction=action_group">';

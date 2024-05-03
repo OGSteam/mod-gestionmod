@@ -37,7 +37,7 @@ document.onmousemove = function(ev){
             // update the old value
             currenttable.oldY = y;
             // update the style to show we're dragging
-            currenttable.dragObject.style.backgroundColor = "#eee";
+            currenttable.dragObject.style.backgroundColor = "#212529";
             // If we're over a row then move the dragged row to there so that the user sees the
             // effect dynamically
             var currentRow = currenttable.findDropTargetRow(y);
@@ -60,7 +60,7 @@ document.onmouseup   = function(ev){
         var droppedRow = currenttable.dragObject;
         // If we have a dragObject, then we need to release it,
         // The row will already have been moved to the right place so we just reset stuff
-        droppedRow.style.backgroundColor = 'transparent';
+        droppedRow.style.backgroundColor = 'grey'; // passage en gris pour visualisé les changements
         currenttable.dragObject   = null;
         // And then call the onDrop method in case anyone wants to do any post processing
         currenttable.onDrop(currenttable.table, droppedRow);
